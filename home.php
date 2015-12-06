@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<section id="main">
+<section class="main-content">
 
 	<h2>Home.php</h2>
 	

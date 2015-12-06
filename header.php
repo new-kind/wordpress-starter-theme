@@ -7,11 +7,11 @@
 	
 	<body>
 		
-		<header>
+		<header class="header">
 			<h1><?php bloginfo('name'); ?></h1>
 		</header>
 		
-		<nav id="global-nav">
+		<nav class="main-nav">
 			<ul>
 			<?php 
 				$args = array(

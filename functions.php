@@ -1,18 +1,18 @@
 <?php
 
-    /** 
+    /**
      **  This file is organized in 5 main components:
-     ** 
+     **
      **  i.   Wordpress Resets
      **  ii.  Custom Post Types
      **  iii. Custom Taxonomies
      **  iv.  Theme Functions
      **  v.   Short Codes
-     ** 
+     **
      **/
 
     /*****************************************************************************
-    *** i.   Wordpress Resets 
+    *** i.   Wordpress Resets
     ******************************************************************************/
 
     ## Resource: http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
@@ -47,33 +47,33 @@
         $favicon_url = site_url() . '/favicon.png';
         echo '<rel="icon" type="image/png" href="' . $favicon_url . '"/>';
     }
-    
+
     add_action('login_head', 'add_favicon');
     add_action('admin_head', 'add_favicon');
 
     /*****************************************************************************
     *** ii.   Custom Post Types
     ******************************************************************************/
-     
+
     ## Documentation: http://codex.wordpress.org/Post_Types
-        
+
     /*****************************************************************************
     *** iii.  Custom Taxonomies
     ******************************************************************************/
-     
+
     ## Documentation: http://codex.wordpress.org/Taxonomies
-      
+
     /*****************************************************************************
     *** iv.  Theme Functions
     ******************************************************************************/
 
     ## FYI: http://codex.wordpress.org/Functions_File_Explained
-     
+
     function show_rss_feed( $source = "", $cnt = 5 , $class = "" ){
 
         if (!empty($source)) {
 
-            // content of feed 
+            // content of feed
             $feedContent = "";
 
             // create curl object and set options
@@ -86,22 +86,22 @@
                 // load xml object from curl execution
                 $feedContent = curl_exec($curl);
                 curl_close($curl);
-            } 
+            }
 
             if ($feedContent == false || strstr($feedContent,"<title>WordPress &rsaquo; Error</title>"))
                 return false;
-           
+
             // load curl content into simplexml
             $feedObj = simplexml_load_string($feedContent);
 
             if (count($feedObj->channel->item) < 1)
                 return;
-        
-            if (empty($class))      
+
+            if (empty($class))
                 echo "<ul>";
-            else                    
+            else
                 echo "<ul class=\"$class\">";
-                 		    
+
             foreach ($feedObj->channel->item as $item) {
                 if ($cnt-- > 0) {
                 	echo "<li>";
@@ -118,7 +118,7 @@
         }
 
     }
-     
+
     /*****************************************************************************s
     *** v.  Short Codes
     ******************************************************************************/

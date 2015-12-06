@@ -1,6 +1,6 @@
 # Starter WordPress Theme
 
-This starter theme is a basic WordPress theme I created to quickly start development on new themes while I was working at NC State.  SInce then, I've made some modiication to generalize it for wider use.  There isn't much to it except a basic theme structure, a Grunt task for CSS compilation and JavaScript minification, and few common dependencies like JQuery and Bootstrap. Feel free to fork and modify as you please under the MIT license.
+This starter theme is a basic WordPress theme I created to quickly start development on new themes while I was working at NC State.  SInce then, I've made some modiications to generalize it for wider use.  There isn't much to it except a basic theme structure, a Grunt task for CSS compilation and JavaScript minification, and few common dependencies like JQuery and Bootstrap. Feel free to fork and modify it as you please under the MIT license.
 
 ## Get Started
 

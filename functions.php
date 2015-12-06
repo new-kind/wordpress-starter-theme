@@ -29,66 +29,61 @@
      
     ## Documentation: http://codex.wordpress.org/Taxonomies
       
-      
     /*****************************************************************************
     *** iv.  Theme Functions
     ******************************************************************************/
 
     ## FYI: http://codex.wordpress.org/Functions_File_Explained
      
-     function show_rss_feed( $source = "", $cnt = 5 , $class = "" ){
+    function show_rss_feed( $source = "", $cnt = 5 , $class = "" ){
 
-         if(!empty($source)){
+        if (!empty($source)) {
 
-         	// content of feed 
-         	$feedContent = "";
+            // content of feed 
+            $feedContent = "";
 
-         	// create curl object and set options
-         	if(strlen($feedContent) < 1){
+            // create curl object and set options
+            if (strlen($feedContent) < 1){
+                $curl = curl_init();
+                curl_setopt($curl, CURLOPT_URL,$source);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
 
-         		$curl = curl_init();
-         		curl_setopt($curl, CURLOPT_URL,$source);
-         		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-         		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
+                // load xml object from curl execution
+                $feedContent = curl_exec($curl);
+                curl_close($curl);
+            } 
 
-         		// load xml object from curl execution
-         		$feedContent = curl_exec($curl);
-         		curl_close($curl);
+            if ($feedContent == false || strstr($feedContent,"<title>WordPress &rsaquo; Error</title>"))
+                return false;
+           
+            // load curl content into simplexml
+            $feedObj = simplexml_load_string($feedContent);
 
-         	} 
+            if (count($feedObj->channel->item) < 1)
+                return;
+        
+            if (empty($class))      
+                echo "<ul>";
+            else                    
+                echo "<ul class=\"$class\">";
+                 		    
+            foreach ($feedObj->channel->item as $item) {
+                if ($cnt-- > 0) {
+                	echo "<li>";
+                    echo "<a href=\"" . $item->link . "\">";
+                    echo $item->title;
+                    echo "</a>";
+                    echo "<span>" . date("n/j/Y",strtotime($item->pubDate)) . "</span>";
+                    echo "</li>";
+                }
+            }
 
-         	if($feedContent == false || strstr($feedContent,"<title>WordPress &rsaquo; Error</title>")){
+            echo "</ul>";
 
-         		return false;
+        }
 
-         	} else {
-
-         		// load curl content into simplexml
-         		$feedObj = simplexml_load_string($feedContent);
-         		
-         		if(count($feedObj->channel->item) < 1)
-         		    return;
-         		    
-         		if(empty($class))       echo "<ul>";
-         		else                    echo "<ul class=\"$class\">";
-         		             		    
-         		foreach($feedObj->channel->item as $item){
-
-            		if($cnt-- > $cnt){
-
-                		echo "<li><a href=\"" . $item->link . "\">" . $item->title . "</a> <span>" . date("n/j/Y",strtotime($item->pubDate)) . "</span></li>";
-
-                    }
-
-            	}
-            	
-            	echo "</ul>";
-
-         	}        
-
-         }
-
-     }
+    }
      
     /*****************************************************************************s
     *** v.  Short Codes

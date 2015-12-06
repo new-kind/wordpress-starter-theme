@@ -2,7 +2,6 @@
 <html>
 	<head>	
 		<title><?php bloginfo('name'); ?></title>
-		<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/style.css" />
 	</head>
 	
 	<body>

@@ -18,17 +18,10 @@ module.exports = function (grunt) {
             }
         },
 
-        less: {
+        sass: {
             dist: {
-                options: {
-                    plugins: [
-                        new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]})
-                    ],
-                    compress: true,
-                    sourceMap: true
-                },
                 files: {
-                    'css/styles.css': 'css/less/styles.less'
+                    'css/styles.css': 'css/sass/styles.scss'
                 }
             }
         },
@@ -45,13 +38,34 @@ module.exports = function (grunt) {
             }
         },
 
+        autoprefixer: {
+            options: {
+                browsers: ['last 2 versions', 'ie 9'],
+            },
+            dist: {
+                src: 'css/styles.css'
+            }
+        },
+
+        cssmin: {
+            options: {
+                sourceMap: true,
+                report: 'min'
+            },
+            dist: {
+                files: {
+                    'css/styles.min.css': ['css/styles.css']
+                }
+            }
+        },
+
         watch: {
-            less: {
+            sass: {
                 files: [
-                    'css/less/*.*',
+                    'css/sass/*.*',
                     'css/lib/*.*'
                 ],
-                tasks: 'less:dist',
+                tasks: ['sass','autoprefixer','cssmin'],
                 interrupt: true
             },
             js: {
@@ -65,6 +79,6 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask('default', ['jshint', 'less:dist', 'uglify:dist' ,'watch']);
+    grunt.registerTask('default', ['jshint', 'sass', 'autoprefixer', 'cssmin', 'uglify:dist' ,'watch']);
 
 };

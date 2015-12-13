@@ -2,3 +2,5 @@ node_modules/
 bower_components/
 
 css/styles.css
+css/styles.min.css
+css/styles.min.css.map

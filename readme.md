@@ -7,6 +7,6 @@ This starter theme is a basic WordPress theme I created to quickly start develop
 1. [Install Node.js](https://nodejs.org/en/download/)
 1. Run `npm install -g bower` to install Bower.
 1. Run `npm install -g grunt-cli` to install the Grunt command line interface.
-1. Run `npm install` to install Grunt and other node dependencies.
-1. Run `bower install` to install dev. dependencies.
+1. Run `./scripts/refresh.sh` to install dependencies, and clean up stale dependencies and build files.
 1. Run `grunt` to compile CSS and add watcher for changes to CSS and JavaScript.
+
